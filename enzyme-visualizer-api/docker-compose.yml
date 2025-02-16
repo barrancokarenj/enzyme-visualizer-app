@@ -1,0 +1,10 @@
+services:
+  fastapi:
+    container_name: visualizer_api
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/code
+    ports:
+      - "3001:3001"
+    restart: always
