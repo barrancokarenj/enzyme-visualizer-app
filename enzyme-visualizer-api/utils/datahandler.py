@@ -2,10 +2,8 @@ import logging
 import pandas
 import re
 
-from common import PARENT_FASTA_PATH, VARIANTS_XLSX_PATH
+from common import PARENT_FASTA_PATH, VARIANTS_XLSX_PATH, logger
 from models import Variant
-
-logger = logging.getLogger("uvicorn.error")
 
 def load_parent_sequence() -> str:
     """Load the parent enzyme sequence from a FASTA file."""
