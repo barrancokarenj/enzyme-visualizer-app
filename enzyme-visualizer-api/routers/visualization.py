@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException, Request
-from models import Variant, ParentSequence, PropertiesList
+from fastapi import APIRouter, HTTPException
+from models import Variant, ParentSequence
 from utils.datahandler import load_variants_data, load_parent_sequence
 
 # Create a new APIRouter instance with a prefix for all routes
@@ -8,7 +8,7 @@ router = APIRouter(
 )
 
 @router.get("/parent-sequence", response_model=ParentSequence)
-def get_parent(request: Request):
+def get_parent():
     """
     Return the parent enzyme sequence.
 
@@ -18,12 +18,13 @@ def get_parent(request: Request):
     Raises:
         HTTPException: If the parent sequence is not loaded.
     """
-    if not request.app.state.parent_sequence:
+    parent_sequence = load_parent_sequence()
+    if not parent_sequence:
         raise HTTPException(status_code=500, detail="Parent sequence not loaded.")
-    return ParentSequence(sequence=request.app.state.parent_sequence)
+    return ParentSequence(sequence=parent_sequence)
 
 @router.get("/variants", response_model=list[Variant])
-def get_variants(request: Request):
+def get_variants():
     """
     Return a list of variants with parsed mutation information.
 
@@ -33,6 +34,9 @@ def get_variants(request: Request):
     Raises:
         HTTPException: If the variants data is not loaded.
     """
-    if not request.app.state.variants_data:
+    variants_data = load_variants_data()
+    # Sort variants by mutation position.
+    variants_data.sort(key=lambda v: v.position)
+    if not variants_data:
         raise HTTPException(status_code=500, detail="Variants data not loaded.")
-    return request.app.state.variants_data
+    return variants_data

@@ -1,6 +1,6 @@
 import { ref, Ref, onMounted } from 'vue';
 import { fetchMutationData, fetchParentSequenceData } from './fetchFunctions';
-import { Mutation, MutationChartData } from '../models/models'; 
+import { Mutation } from '../models/models'; 
 
 export const useMutationData = () => {
   // Define the reactive state with proper types

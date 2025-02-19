@@ -9,7 +9,6 @@
 import { ref, onMounted, watch } from 'vue';
 import { useMutationData } from '../composables/useMutationData';
 import * as echarts from 'echarts';
-import { defineEmits, defineProps } from 'vue'
 import { MutationChartData, MutationInfo } from '../models/models';
 
 // Destructure the necessary data from the useMutationData composable
@@ -137,7 +136,7 @@ const updateChart = (): void => {
           name: 'Mutations',
           data: values.map((value: string, index: number) => ({
             value: [positions[index], value],
-            symbolSize: 35,
+            symbolSize: 10,
             itemStyle: {
               color: aminoAcidColors[mutatedAminoAcids[index]] || '#FF5733', // Color for mutations
             },

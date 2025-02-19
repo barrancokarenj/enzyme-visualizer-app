@@ -9,11 +9,13 @@ export interface ParentSequenceData {
   sequence: string;
 }
 
+//Properties and selected property received from the Scatter Plot
 export interface MutationInfo {
   selectedProperty:  Ref<string>;
   properties: Ref<string[]>; 
 }
 
+//Mutation Data 
 export interface MutationChartData {
   mutationPosition: number,
   value: string,
