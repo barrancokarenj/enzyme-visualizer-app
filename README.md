@@ -16,16 +16,12 @@ $ checkout branch main
 
 $ cd enzyme-visualizer-app/enzyme-visualizer-api
 
-3. Copy contents of .env.example to .env and modify as needed, 
-
-or use the default for local development
-
-4. Execute the following command
+3. Execute the following command
 
 $ docker compose up --build -d
 
 
-5. Access http://localhost:3001/docs to check if server is running
+4. Access http://localhost:3001/docs to check if server is running
 
 
 ```
@@ -34,9 +30,9 @@ $ docker compose up --build -d
 
 ```bash
 
-1. Navigate inside enzyme-visualizer-app/enzyme-visualizer-api folder
+1. Navigate inside enzyme-visualizer-app/enzyme-visualizer-ui folder
 
-$ cd enzyme-visualizer-app/enzyme-visualizer-api
+$ cd enzyme-visualizer-app/enzyme-visualizer-ui
 
 2. Install dependencies
 
