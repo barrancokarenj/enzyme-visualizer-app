@@ -16,9 +16,9 @@ $ checkout branch main
 
 $ cd enzyme-visualizer-app/enzyme-visualizer-api
 
-3. Copy contents of .env.example to .env and modify as needed, or use the
+3. Copy contents of .env.example to .env and modify as needed, 
 
- default for local development
+or use the default for local development
 
 4. Execute the following command
 
@@ -42,7 +42,9 @@ $ cd enzyme-visualizer-app/enzyme-visualizer-api
 
 $ npm i
 
-3. Copy contents of .env.example to .env, and modify as needed, or use the default for local development
+3. Copy contents of .env.example to .env, and modify as needed, 
+
+or use the default for local development
 
 
 4. Start at localhost:3000
