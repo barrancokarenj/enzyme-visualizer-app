@@ -101,7 +101,7 @@ const updateChart = (): void => {
             return `Position: ${positions[dataIndex]}<br>Original: ${originalAminoAcids[dataIndex]} → Mutated: ${mutatedAminoAcids[dataIndex]}<br>Property Value: ${values[dataIndex]}`;
           }
           if (seriesName === 'Parent Sequence') {
-            return `Position: ${params.dataIndex + 1}<br>Amino Acid: ${parentSequence[params.dataIndex]}`;
+            return `Position: ${params.dataIndex + 1}<br>Amino Acid: ${parentSequence.value[params.dataIndex]}`;
           }
           return '';
         }
