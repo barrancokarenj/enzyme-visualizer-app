@@ -1,6 +1,6 @@
-import { ref, Ref, onMounted } from 'vue';
+import { ref, type Ref, onMounted } from 'vue';
 import { fetchMutationData, fetchParentSequenceData } from './fetchFunctions';
-import { Mutation } from '../models/models'; 
+import type { Mutation } from '../models/models'; 
 
 export const useMutationData = () => {
   // Define the reactive state with proper types

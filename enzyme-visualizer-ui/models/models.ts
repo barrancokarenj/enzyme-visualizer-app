@@ -18,7 +18,7 @@ export interface MutationInfo {
 //Mutation Data 
 export interface MutationChartData {
   mutationPosition: number,
-  value: string,
-  mutatedAminoAcid: string,
+  value: number,
+  mutatedAminoAcid: string[],
   originalAminoAcid: string
 }

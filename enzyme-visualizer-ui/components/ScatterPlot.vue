@@ -6,17 +6,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useMutationData } from '../composables/useMutationData';
 import * as echarts from 'echarts';
-import { MutationChartData, MutationInfo } from '../models/models';
+import type { MutationChartData, MutationInfo } from '../models/models';
 
 // Destructure the necessary data from the useMutationData composable
 const { 
-  variants, 
   properties, 
   selectedProperty, 
-  mutatedSequence, 
   getDataForSelectedProperty, 
   parentSequence
 } = useMutationData();
@@ -58,7 +56,7 @@ watch(selectedProperty, () => {
 });
 
 // Watch for changes in the newSelectedProperty prop to update the chart
-watch(() => props.newSelectedProperty, (value: ref<string>) => {
+watch(() => props.newSelectedProperty, (value: string) => {
   selectedProperty.value = value;
   handleUpdateChart();
 });
@@ -75,8 +73,8 @@ const updateChart = (): void => {
     // Get data for the selected property
     const data = getDataForSelectedProperty();
     const positions = data.map((mutationData : MutationChartData) => mutationData.mutationPosition);
-    const values = data.map((mutationData : MutationChartData) => mutationData.value);
-    const mutatedAminoAcids = data.map((mutationData : MutationChartData) => mutationData.mutatedAminoAcid);
+    const values = data.map((mutationData : MutationChartData) => Number(mutationData.value));
+    const mutatedAminoAcids: string[] = data.map((mutationData : MutationChartData) => mutationData.mutatedAminoAcid[0]);
     const originalAminoAcids = data.map((mutationData : MutationChartData) => mutationData.originalAminoAcid);
 
     // Parent sequence data (X position is amino acid index, Y is baseline 0)
@@ -96,7 +94,9 @@ const updateChart = (): void => {
       tooltip: {
         trigger: 'item',
         formatter: (params: any) => {
-          const { seriesName, value, dataIndex } = params;
+          
+          const { seriesName, dataIndex } = params;
+
           if (seriesName === 'Mutations') {
             return `Position: ${positions[dataIndex]}<br>Original: ${originalAminoAcids[dataIndex]} → Mutated: ${mutatedAminoAcids[dataIndex]}<br>Property Value: ${values[dataIndex]}`;
           }
@@ -108,7 +108,7 @@ const updateChart = (): void => {
       },
       xAxis: {
         type: 'category',
-        data: parentSequence.value.split('').map((_, i) => `${i + 1}`),  // Position of the amino acids as X labels
+        data: parentSequence.value.split('').map((_, i) => `${i + 300}`),  // Position of the amino acids as X labels
         name: 'Position',
         axisLabel: {
           formatter: (value: string, index: number) => {
@@ -117,7 +117,8 @@ const updateChart = (): void => {
           },
         },
         nameLocation: 'middle',
-        nameGap: 50
+        nameGap: 50,
+        onZero: false
       },
       yAxis: {
         type: 'value',
@@ -134,7 +135,7 @@ const updateChart = (): void => {
         },
         {
           name: 'Mutations',
-          data: values.map((value: string, index: number) => ({
+          data: values.map((value: number, index: number) => ({
             value: [positions[index], value],
             symbolSize: 10,
             itemStyle: {
@@ -154,7 +155,7 @@ const updateChart = (): void => {
 
 const handleUpdateChart = ():void => {
   updateChart(); // Update the chart when the selected property changes
-  emit('onPropertiesLoaded', {'properties': properties.value, 'selectedProperty': selectedProperty});
+  emit('onPropertiesLoaded', {'properties': properties, 'selectedProperty': selectedProperty});
 };
 
 // Cleanup the chart instance when the component is unmounted

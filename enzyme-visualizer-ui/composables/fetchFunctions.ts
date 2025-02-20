@@ -1,5 +1,5 @@
 import { useFetch } from '@vueuse/core';
-import { Mutation, ParentSequenceData } from '../models/models';
+import type { Mutation, ParentSequenceData } from '../models/models';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
