@@ -38,28 +38,27 @@ export const useMutationData = () => {
   const generateMutatedSequence = (): string => {
     let mutatedSeq = parentSequence.value.split(''); // Convert parent sequence to an array
     variants.value.forEach((variant:Mutation) => {
-      const mutationParts = variant.mutation.split('+');
+      const mutationParts = variant.mutation.split('+'); //ex N196I
       mutationParts.forEach((mutation: string) => {
         const position = parseInt(mutation.match(/\d+/)?.[0] ?? '0') - 1; // Adjust for 0-based index
         const mutatedAminoAcid = mutation[mutation.length - 1];
-
         if (mutatedSeq[position] !== mutatedAminoAcid) {
           mutatedSeq[position] = mutatedAminoAcid; // Apply mutation
         }
       });
     });
+
     return mutatedSeq.join(''); // Return the mutated sequence as a string
   };
 
   // Get mutation data for the selected property
   const getDataForSelectedProperty = () => {
     return variants.value.map((variant: Mutation) => {
-      const mutationParts = variant.mutation.split('+');
-      const originalAminoAcid = parentSequence.value[parseInt(mutationParts[0].match(/\d+/)?.[0] ?? '0') - 1];
+      const originalAminoAcid = variant.wild_type
       return {
-        mutationPosition: parseInt(mutationParts[0].match(/\d+/)?.[0] ?? '0'),
+        mutationPosition: variant.position,
         value: variant.properties[selectedProperty.value],
-        mutatedAminoAcid: mutationParts.map((mutation: string) => mutation[mutation.length - 1]),
+        mutatedAminoAcid: [variant.mutant],
         originalAminoAcid, // Include the original amino acid at the mutation position
       };
     });

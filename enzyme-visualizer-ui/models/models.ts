@@ -1,6 +1,9 @@
 // Define the types for the fetched data
 export interface Mutation {
   mutation: string;
+  wild_type: string;
+  mutant: string
+  position: number;
   properties: Record<string, number>;
 }
 

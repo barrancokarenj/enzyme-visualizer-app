@@ -108,7 +108,7 @@ const updateChart = (): void => {
       },
       xAxis: {
         type: 'category',
-        data: parentSequence.value.split('').map((_, i) => `${i + 300}`),  // Position of the amino acids as X labels
+        data: parentSequence.value.split('').map((_, i) => `${i + 1}`),  // Position of the amino acids as X labels
         name: 'Position',
         axisLabel: {
           formatter: (value: string, index: number) => {
